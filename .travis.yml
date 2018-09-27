@@ -7,6 +7,9 @@ before_script:
   - (cd $HOME/try_cache && find . -name '*.zlc' -print | cpio -pvdumB /)
   - (cd $HOME/try_cache && find . -name '*.graph' -print | cpio -pvdumB /)
 
+script:
+  - mvn starts:starts -B
+
 after_success:
   - .buildscript/deploy_snapshot.sh
 
