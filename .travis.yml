@@ -3,6 +3,10 @@ language: java
 jdk:
   - oraclejdk8
 
+before_script:
+  - (cd $HOME/try_cache && find . -name '*.zlc' -print | cpio -pvdumB /)
+  - (cd $HOME/try_cache && find . -name '*.graph' -print | cpio -pvdumB /)
+
 after_success:
   - .buildscript/deploy_snapshot.sh
 
@@ -23,3 +27,8 @@ sudo: false
 cache:
   directories:
     - $HOME/.m2
+    - $HOME/try_cache
+
+before_cache:
+  - find $TRAVIS_BUILD_DIR -name '*.zlc' -print | cpio -pvdumB $HOME/try_cache
+  - find $TRAVIS_BUILD_DIR -name '*.graph' -print | cpio -pvdumB $HOME/try_cache
